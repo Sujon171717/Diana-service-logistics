@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brand-primary: #0096FF;
+  --brand-primary-hover: #0086e6;
+  --brand-primary-foreground: #ffffff;
 }
 
 @theme inline {
@@ -22,5 +25,131 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-scale-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: modal-fade-in 180ms ease-out both;
+}
+
+.animate-scaleUp {
+  animation: modal-scale-up 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-scaleUp {
+    animation-duration: 1ms;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-invoice-modal,
+  .print-invoice-modal * {
+    visibility: visible;
+  }
+
+  .print-invoice-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    background: #ffffff;
+    padding: 0;
+    overflow: visible;
+    min-height: 0;
+  }
+
+  .print-invoice-content {
+    display: block;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    border: 0;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  .print-invoice-content > div:not(.invoice-toolbar) {
+    display: block;
+  }
+
+  .print-invoice-content .p-8 {
+    padding: 16px !important;
+  }
+
+  .print-invoice-content h2 {
+    font-size: 24px;
+  }
+
+  .print-invoice-content h3 {
+    margin-top: 18px;
+    font-size: 18px;
+  }
+
+  .print-invoice-content .mt-8 {
+    margin-top: 18px;
+  }
+
+  .print-invoice-content .mt-9 {
+    margin-top: 18px;
+  }
+
+  .print-invoice-content .p-6,
+  .print-invoice-content .p-5,
+  .print-invoice-content .p-4 {
+    padding: 10px !important;
+  }
+
+  .print-invoice-content .mt-6 {
+    margin-top: 12px;
+  }
+
+  .print-invoice-content * {
+    page-break-inside: avoid;
+  }
+
+  .invoice-toolbar {
+    display: none;
+  }
 }
