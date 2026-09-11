@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { AlertCircle, CheckCircle2, LogOut, Pencil, Trash2 } from 'lucide-react';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { 
@@ -1036,7 +1037,7 @@ export default function AdminDashboard() {
             <div className="p-8 md:p-10 text-slate-800">
               <div className="flex items-start justify-between border-b-2 border-slate-300 pb-5">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#e5f3ff] text-xl font-black text-[#2878c8]">DS</div>
+                  <Image src="/icon.png" alt="Diana Service Company" width={64} height={64} className="h-16 w-16 rounded-xl object-contain" />
                   <div><h2 className="text-2xl font-extrabold tracking-tight text-[#2878c8]">Diana Service Logistics</h2><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Official maintenance &amp; service</p></div>
                 </div>
                 <div className="text-right"><h2 className="text-3xl font-black uppercase text-[#2878c8]">Invoice</h2><p className="mt-2 text-xs text-slate-600">Invoice No: <strong className="font-mono text-slate-900">{selectedInvoice.invoiceNumber}</strong></p><p className="text-xs text-slate-600">Date: {formatInvoiceDate(selectedInvoice.completionDate)}</p></div>
