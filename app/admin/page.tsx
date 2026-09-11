@@ -155,6 +155,7 @@ interface Rider {
   emergencyContact: string;
   vehicleId?: string;
   status?: string;
+  expoPushToken?: string;
   createdAt?: any;
 }
 
@@ -476,13 +477,37 @@ export default function AdminDashboard() {
   const handleApprove = async (ticket: Ticket) => {
     try {
       await updateDoc(doc(db, 'tickets', ticket.id), { status: 'Approved' });
+      try { await notifyRider(ticket, 'Approved'); } catch (error) { console.error('Approval notification failed:', error); }
     } catch (err) { alert("Failed to approve"); }
   };
 
   const handleReject = async (ticket: Ticket) => {
     try {
       await updateDoc(doc(db, 'tickets', ticket.id), { status: 'Rejected' });
+      try { await notifyRider(ticket, 'Rejected'); } catch (error) { console.error('Rejection notification failed:', error); }
     } catch (err) { alert("Failed to reject"); }
+  };
+
+  const notifyRider = async (ticket: Ticket, status: 'Approved' | 'Rejected' | 'Completed', invoiceId?: string) => {
+    const rider = riders.find((item) => item.id === ticket.riderUid);
+    if (!rider?.expoPushToken) return;
+
+    const response = await fetch('/api/notifications/ticket-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ticketId: ticket.id,
+        riderId: ticket.riderUid,
+        expoPushToken: rider.expoPushToken,
+        status,
+        invoiceId,
+      }),
+    });
+
+    if (!response.ok) {
+      const result = await response.json().catch(() => null) as { error?: string } | null;
+      throw new Error(result?.error || 'Notification request failed.');
+    }
   };
 
   const openRepairCostModal = (ticket: Ticket) => {
@@ -531,6 +556,7 @@ export default function AdminDashboard() {
         invoiceId: invoiceRef.id,
         invoiceNumber: invoice.invoiceNumber
       });
+      try { await notifyRider(ticket, 'Completed', invoiceRef.id); } catch (error) { console.error('Completion notification failed:', error); }
       if (ticket.riderUid) {
         await setDoc(doc(db, 'notifications', `${ticket.id}-completed`), {
           riderId: ticket.riderUid,
