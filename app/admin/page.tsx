@@ -751,20 +751,22 @@ export default function AdminDashboard() {
                           {t.status}
                         </span>
                       </td>
-                      <td className="p-3.5 text-right space-x-2" onClick={(event) => event.stopPropagation()}>
-                        {t.status === 'Under Review' && (
-                          <>
-                            <button onClick={() => handleApprove(t)} className="px-2.5 py-1 bg-[#0096FF] hover:bg-[#0086e6] text-white rounded text-[11px] font-semibold">Approve</button>
-                            <button onClick={() => handleReject(t)} className="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-[11px] font-semibold">Reject</button>
-                          </>
-                        )}
-                        {t.status === 'Approved' && (
-                          <button onClick={() => openRepairCostModal(t)} className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-semibold">Complete</button>
-                        )}
-                        {t.status === 'Completed' && (
-                          <button onClick={() => handleViewInvoice(t)} className="px-2.5 py-1 bg-[#e5f3ff] hover:bg-[#cceaff] text-[#0076c9] rounded text-[11px] font-semibold border border-[#99d3ff]">View Invoice</button>
-                        )}
-                        <button type="button" onClick={() => handleDeleteTicket(t)} className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-rose-200 bg-rose-50 text-rose-600 transition-colors hover:bg-rose-100" title="Delete ticket" aria-label="Delete ticket"><Trash2 size={15} strokeWidth={2} /></button>
+                      <td className="p-3.5 text-right" onClick={(event) => event.stopPropagation()}>
+                        <div className="inline-flex items-center justify-end gap-2 whitespace-nowrap">
+                          {t.status === 'Under Review' && (
+                            <>
+                              <button onClick={() => handleApprove(t)} className="px-2.5 py-1 bg-[#0096FF] hover:bg-[#0086e6] text-white rounded text-[11px] font-semibold">Approve</button>
+                              <button onClick={() => handleReject(t)} className="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-[11px] font-semibold">Reject</button>
+                            </>
+                          )}
+                          {t.status === 'Approved' && (
+                            <button onClick={() => openRepairCostModal(t)} className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-semibold">Complete</button>
+                          )}
+                          {t.status === 'Completed' && (
+                            <button onClick={() => handleViewInvoice(t)} className="px-2.5 py-1 bg-[#e5f3ff] hover:bg-[#cceaff] text-[#0076c9] rounded text-[11px] font-semibold border border-[#99d3ff]">View Invoice</button>
+                          )}
+                          <button type="button" onClick={() => handleDeleteTicket(t)} className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-rose-200 bg-rose-50 text-rose-600 transition-colors hover:bg-rose-100" title="Delete ticket" aria-label="Delete ticket"><Trash2 size={15} strokeWidth={2} /></button>
+                        </div>
                       </td>
                     </tr>
                   ))}
