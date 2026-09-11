@@ -167,8 +167,6 @@ interface Vehicle {
   vehicleType: string;
   fuelType: string;
   currentOdo: number | string;
-  chassisNumber: string;
-  engineNumber?: string;
   lastOilChangeDate?: any;
   status: string;
   createdAt?: any;
@@ -226,8 +224,6 @@ export default function AdminDashboard() {
     vehicleType: 'Motorcycle',
     fuelType: '91 Petrol',
     currentOdo: '',
-    chassisNumber: '',
-    engineNumber: '',
     lastOilChangeDate: '',
     status: 'Active'
   };
@@ -332,8 +328,6 @@ export default function AdminDashboard() {
       vehicleType: vehicle.vehicleType || 'Motorcycle',
       fuelType: vehicle.fuelType || '91 Petrol',
       currentOdo: String(vehicle.currentOdo || ''),
-      chassisNumber: vehicle.chassisNumber || '',
-      engineNumber: vehicle.engineNumber || '',
       lastOilChangeDate: toDateInputValue(vehicle.lastOilChangeDate),
       status: vehicle.status || 'Active'
     });
@@ -892,7 +886,6 @@ export default function AdminDashboard() {
                     <tr key={v.id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="p-3.5 font-semibold text-slate-900">
                         {v.modelName}
-                        <span className="block text-[10px] text-slate-400 font-normal">Chassis: {v.chassisNumber || 'N/A'}</span>
                       </td>
                       <td className="p-3.5 font-mono font-bold text-slate-800 bg-slate-50 px-2 py-1 rounded border border-slate-200 inline-block my-2">{v.plateNumber}</td>
                       <td className="p-3.5 text-slate-600">{v.vehicleType} <span className="text-slate-400">({v.fuelType})</span></td>
@@ -1188,16 +1181,6 @@ export default function AdminDashboard() {
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">Odometer (km)</label>
                   <input type="number" value={vehicleData.currentOdo} onChange={(e) => setVehicleData({...vehicleData, currentOdo: e.target.value})} className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono" placeholder="15000" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Chassis / Engine No.</label>
-                  <input type="text" value={vehicleData.chassisNumber} onChange={(e) => setVehicleData({...vehicleData, chassisNumber: e.target.value})} className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono" placeholder="CHS-KSA-99120" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Engine No.</label>
-                  <input type="text" value={vehicleData.engineNumber} onChange={(e) => setVehicleData({...vehicleData, engineNumber: e.target.value})} className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg font-mono" placeholder="ENG-KSA-99120" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
